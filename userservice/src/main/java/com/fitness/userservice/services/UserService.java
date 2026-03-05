@@ -39,7 +39,7 @@ public class UserService {
     }
 
     public UserResponse getUserProfile(String userId) {
-        User user=repository.findById(Long.valueOf(userId))
+        User user=repository.findById(String.valueOf(userId))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         UserResponse userResponse=new UserResponse();
@@ -55,5 +55,12 @@ public class UserService {
 
 
         }
+
+    public Boolean existByUserId(String userId) {
+        System.out.println("Calling User Validation API for userId: {}" +userId);
+        return repository.existsById(userId);
+
+
     }
+}
 

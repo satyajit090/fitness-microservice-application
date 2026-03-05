@@ -10,17 +10,19 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 @RequiredArgsConstructor
 public class UserValidationService {
 
-    private final WebClient.Builder webClientBuilder;
+    private final WebClient userServiceWebClient;
 
     public boolean validateUser(String userId) {
 
         try {
-            return webClientBuilder.build()
+            Boolean response = userServiceWebClient
                     .get()
                     .uri("/api/users/{userId}/validate", userId)
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
+
+            return Boolean.TRUE.equals(response);
 
         } catch (WebClientResponseException e) {
 
